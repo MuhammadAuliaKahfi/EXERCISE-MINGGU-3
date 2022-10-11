@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Exercise M03</title>
+  </head>
+  <style>
+    body{
+        background-color: blue;
+        color: white;
+        margin-top: 50px;
+    }
+    table, th, td{
+      border: 2.5px ;
+      text-align: left;
+      padding: 12px;
+    }
+    table{
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1{
+      text-align: center;
+    }
+    a{
+      color: white;
+    }
+  </style>
+  <body>
+    <div>
+      <h1>Punny Web</h1>
+      <table id="dataTabel">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>City</th>
+        </tr>
+      </table>
+    </div>
+    <script>
+        let a = function(response){
+          data = JSON.parse(response);
+          var trHTML = "";
+          data.forEach(item => {
+            trHTML +=
+              "<tr><td><a href=http://"+item.website+" title = "+item.company.name+">"+item.id +
+              "</a></td><td>" +
+              item.name +
+              "</td><td>" +
+              item.username +
+              "</td></td>"+
+              "</td><td>"+
+              item.email +
+              "</td><td>" +
+              item.address.city +
+              "</td></tr>";
+          });
+          let dat = document.getElementById("dataTabel").innerHTML;
+          document.getElementById("dataTabel").innerHTML = dat+trHTML;
+        }
+        let load = function () {
+          let link = "https://jsonplaceholder.typicode.com/users";
+          let xhr;
+          xhr = new XMLHttpRequest();
+          try {
+            xhr = new XMLHttpRequest();
+            if (!xhr) return -1;
+            xhr.onreadystatechange = function () {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                a(xhr.responseText);
+              }
+            };
+            xhr.open("GET", link);
+            xhr.send();
+          }catch (e) {
+            console.log(e);
+          }
+        };
+        load();
+    </script>
+  </body>
+</html>
